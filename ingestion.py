@@ -1,13 +1,10 @@
 import pandas as pd
-import numpy as np
 import os
+import glob
 import json
-from datetime import datetime
 
 
-
-
-#############Load config.json and get input and output paths
+# Load config.json and get input and output paths
 with open('config.json', 'r') as f:
     config = json.load(f) 
 
@@ -15,11 +12,20 @@ input_folder_path = config['input_folder_path']
 output_folder_path = config['output_folder_path']
 
 
-
-#############Function for data ingestion
+# Function for data ingestion
 def merge_multiple_dataframe():
-    #check for datasets, compile them together, and write to an output file
-    pass
+    ingested_f = open(os.path.join(output_folder_path, 'ingestedfiles.txt'), 'w')
+
+    full_df = pd.DataFrame()
+    for csv_f in glob.glob(pathname='practicedata/*.csv'):
+        df = pd.read_csv(csv_f)
+        full_df = pd.concat([full_df, df], axis=0, ignore_index=True)
+        ingested_f.write(f'{csv_f}\n')
+
+    ingested_f.close()
+
+    full_df = full_df.drop_duplicates(ignore_index=True)
+    full_df.to_csv(os.path.join(output_folder_path, 'finaldata.csv'), index=False)
 
 
 if __name__ == '__main__':
