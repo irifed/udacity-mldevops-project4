@@ -1,0 +1,4 @@
+outs:
+- md5: 6c2c32d57c2de2ff1c75ba1239e30dc7
+  size: 522
+  path: finaldata.csv
