@@ -1,0 +1,4 @@
+outs:
+- md5: 6955368e0af6597ba431640aee4152cd
+  size: 345
+  path: dataset4.csv
