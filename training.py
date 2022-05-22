@@ -63,7 +63,6 @@ def process_data(X, label=None):
 def train_model():
 
     df = pd.read_csv(os.path.join(config['output_folder_path'], 'finaldata.csv'))
-
     X_full, y_full = process_data(df, label='exited')
 
     # train/test split???
