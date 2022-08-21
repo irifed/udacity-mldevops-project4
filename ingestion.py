@@ -8,16 +8,13 @@ import json
 with open('config.json', 'r') as f:
     config = json.load(f) 
 
-input_folder_path = config['input_folder_path']
-output_folder_path = config['output_folder_path']
-
 
 # Function for data ingestion
 def merge_multiple_dataframe():
-    ingested_f = open(os.path.join(output_folder_path, 'ingestedfiles.txt'), 'w')
+    ingested_f = open(os.path.join(config['output_folder_path'], 'ingestedfiles.txt'), 'w')
 
     full_df = pd.DataFrame()
-    for csv_f in glob.glob(pathname='practicedata/*.csv'):
+    for csv_f in glob.glob(pathname=os.path.join(config['input_folder_path'], '*.csv')):
         df = pd.read_csv(csv_f)
         full_df = pd.concat([full_df, df], axis=0, ignore_index=True)
         ingested_f.write(f'{csv_f}\n')
@@ -25,7 +22,7 @@ def merge_multiple_dataframe():
     ingested_f.close()
 
     full_df = full_df.drop_duplicates(ignore_index=True)
-    full_df.to_csv(os.path.join(output_folder_path, 'finaldata.csv'), index=False)
+    full_df.to_csv(os.path.join(config['output_folder_path'], 'finaldata.csv'), index=False)
 
 
 if __name__ == '__main__':

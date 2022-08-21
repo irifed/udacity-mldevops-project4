@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import pickle
 import os
 import json
 import joblib
@@ -8,13 +7,12 @@ import joblib
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 
-
 # Load config.json and get path variables
 with open('config.json','r') as f:
     config = json.load(f) 
 
 dataset_csv_path = os.path.join(config['output_folder_path']) 
-model_path = os.path.join(config['output_model_path']) 
+model_path = os.path.join(config['output_model_path'])
 
 
 def process_data(X, label=None):
@@ -87,7 +85,7 @@ def train_model():
     acc = clf.score(X_train, y_train)
     print(f'Fit accuracy = {acc}')
 
-    joblib.dump(clf, os.path.join(config['output_folder_path'], 'trainedmodel.pkl'))
+    joblib.dump(clf, os.path.join(config['output_model_path'], 'trainedmodel.pkl'))
 
 
 if __name__ == "__main__":

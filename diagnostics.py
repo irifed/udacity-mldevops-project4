@@ -13,16 +13,10 @@ from training import process_data
 with open('config.json','r') as f:
     config = json.load(f) 
 
-dataset_csv_path = os.path.join(config['output_folder_path']) 
-test_data_path = os.path.join(config['test_data_path']) 
-
 
 # Function to get model predictions
-def model_predictions():
-    df = pd.read_csv(os.path.join(config['output_folder_path'], 'finaldata.csv'))
-    X_test, y_test = process_data(df, label='exited')
-
-    clf = joblib.load(os.path.join(config['output_folder_path'], 'trainedmodel.pkl'))
+def model_predictions(X_test):
+    clf = joblib.load(os.path.join(config['output_model_path'], 'trainedmodel.pkl'))
     preds = clf.predict(X_test)
 
     return preds
@@ -121,7 +115,10 @@ def outdated_packages_list():
 
 
 if __name__ == '__main__':
-    model_predictions()
+    df = pd.read_csv(os.path.join(config['output_folder_path'], 'finaldata.csv'))
+    X_test, y_test = process_data(df, label='exited')
+
+    model_predictions(X_test)
     dataframe_summary()
     execution_time()
     outdated_packages_list()
