@@ -19,6 +19,7 @@ def store_model_into_pickle():
         shutil.copy(os.path.join(dataset_csv_path, fname),
                     os.path.join(prod_deployment_path, fname))
 
+
 if __name__ == "__main__":
     store_model_into_pickle()
         
